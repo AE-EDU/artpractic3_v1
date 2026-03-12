@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Анимированный плакат</title>
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Unbounded:wght@900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="poster">
+      <header class="poster__header">
+        <h1 class="poster__title">
+          ЛАБОРАТОРИЯ БИВИУМ<br />КАЛЕЙДОСКОП ЗНАНИЙ
+        </h1>
+      </header>
+
+      <main class="poster__main">
+        <h2 class="poster__subtitle">ТАИНСТВЕННЫЕ УЗОРЫ: УГАДАЙ ЖИВОТНОЕ</h2>
+
+        <div class="main__kaleidoscope-wrapper">
+          <img
+            src="img/kaleidoscope-1.png"
+            alt="Калейдоскоп"
+            class="main__kaleidoscope"
+          />
+        </div>
+
+        <div class="main__buttons">
+          <button class="button button--rotate">КРУТИТЬ</button>
+        </div>
+
+        <div class="main__decor">
+          <div class="decor__circle" aria-hidden="true"></div>
+          <img
+            src="img/image-1.png"
+            alt="Животное"
+            class="decor__animal"
+            aria-hidden="true"
+          />
+          <div class="decor__lines">
+            <img
+              src="img/SubtractL.svg"
+              alt="Предыдущее"
+              class="decor__line decor__line--left"
+            />
+            <img
+              src="img/SubtractR.svg"
+              alt="Следующее"
+              class="decor__line decor__line--right"
+            />
+          </div>
+        </div>
+
+        <div class="main__buttons main__buttons--answer">
+          <button class="button button--answer">ОТВЕТИТЬ</button>
+        </div>
+      </main>
+
+      <footer class="poster__footer">
+        <img src="img/logo.svg" alt="Логотип" class="footer__logo" />
+        <div class="footer__info">
+          <div class="footer__name">ЕНДОВИЦКАЯ АЛЕНА</div>
+          <div class="footer__group">БП25Д312</div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="./scripts/script.js"></script>
+  </body>
+</html>
