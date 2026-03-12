@@ -38,12 +38,15 @@
   font-family: 'Unbounded', sans-serif;
   font-weight: 900;
   color: var(--color-text-light);
-  font-size: clamp(2.5rem, 8vw, 6.5625rem);
+  font-size: clamp(1.5rem, 5vw, 6.5625rem);
   line-height: 1.3;
   text-transform: uppercase;
-  word-break: break-word;
 }
 
+.title__two-lines,
+.title__four-lines {
+  display: block;
+}
 
 .poster__main {
   display: flex;
@@ -236,7 +239,7 @@
 
 @media (max-width: 1200px) {
   .poster {
-    padding: 20px;
+    padding: 20px 0 20px;
     gap: 30px;
   }
 
@@ -263,6 +266,10 @@
 }
 
 @media (max-width: 768px) {
+  .poster__title {
+    font-size: 4.5vw;
+  }
+
   .poster__footer {
     flex-direction: column;
     align-items: center;
@@ -290,8 +297,20 @@
   }
 }
 
+@media (max-width: 375px) {
+  .title__two-lines {
+    display: none;
+  }
+}
+
 @media (min-width: 1920px) {
   .poster {
     margin: 0 auto;
+  }
+}
+
+@media (min-width: 376px) {
+  .title__four-lines {
+    display: none;
   }
 }
