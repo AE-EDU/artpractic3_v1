@@ -11,12 +11,18 @@ document.addEventListener("DOMContentLoaded", () => {
     "img/kaleidoscope-1.png",
     "img/kaleidoscope-2.png",
     "img/kaleidoscope-3.png",
+    "img/kaleidoscope-4.png",
+    "img/kaleidoscope-5.png",
+    "img/kaleidoscope-6.png",
   ];
 
   const animalImages = [
     "img/image-1.png",
     "img/image-2.png",
     "img/image-3.png",
+    "img/image-4.png",
+    "img/image-5.png",
+    "img/image-6.png",
   ];
 
   let currentAnimalIndex = 0;
@@ -35,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       currentAnimalIndex =
         (currentAnimalIndex - 1 + animalImages.length) % animalImages.length;
       animalImg.src = animalImages[currentAnimalIndex];
+      decorCircle.classList.remove("answer-correct", "answer-wrong");
     });
   }
 
@@ -42,12 +49,14 @@ document.addEventListener("DOMContentLoaded", () => {
     rightArrow.addEventListener("click", () => {
       currentAnimalIndex = (currentAnimalIndex + 1) % animalImages.length;
       animalImg.src = animalImages[currentAnimalIndex];
+      decorCircle.classList.remove("answer-correct", "answer-wrong");
     });
   }
 
   // Вращение калейдоскопа
   if (rotateBtn) {
     rotateBtn.addEventListener("click", () => {
+      decorCircle.classList.remove("answer-correct", "answer-wrong");
       // Выбираем случайное изображение
       const randomIndex = Math.floor(Math.random() * kaleidoscopeImages.length);
       selectedKaleidoscopeIndex = randomIndex;
@@ -73,11 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         decorCircle.classList.add("answer-wrong");
       }
-
-      // Убираем подсветку через 5 секунд
-      setTimeout(() => {
-        decorCircle.classList.remove("answer-correct", "answer-wrong");
-      }, 5000);
     });
   }
 });

@@ -18,7 +18,6 @@
   max-width: var(--container-max-width);
   margin: 0 auto;
   background-color: var(--color-bg);
-  border: 3px solid #bdbdbd;
   padding: 40px 0 20px;
   display: flex;
   flex-direction: column;
@@ -77,12 +76,12 @@
   justify-content: center;
   background-image: url('../img/image-2.svg');
   background-repeat: no-repeat;
-  background-position: center 35%;
+  background-position: center 33%;
   background-size: cover;
 }
 
 .main__kaleidoscope {
-  max-width: min(1220px, 90%);
+  max-width: min(1220px, 70vw);
   width: 100%;
   height: auto;
   aspect-ratio: 1/1;
@@ -102,7 +101,7 @@
 }
 
 .rotating {
-  animation: spin 5s ease-out forwards;
+  animation: spin 2s ease-out forwards;
 }
 
 
@@ -110,10 +109,6 @@
   display: flex;
   justify-content: center;
   width: 100%;
-}
-
-.main__buttons--answer {
-  margin-top: 20px;
 }
 
 .button {
@@ -159,6 +154,7 @@
   background: transparent;
   justify-self: center;
   align-self: center;
+  transition: background-color 0.3s ease;
 }
 
 
@@ -175,16 +171,12 @@
   border-radius: 20px;
 }
 
-.decor__circle {
-  transition: background-color 0.3s ease;
-}
-
 .decor__circle.answer-correct {
-  background: rgba(0, 255, 0, 0.3);
+  background: rgba(0, 255, 0, 0.6);
 }
 
 .decor__circle.answer-wrong {
-  background: rgba(255, 0, 0, 0.3);
+  background: rgba(249, 0, 0, 0.6);
 }
 
 .decor__lines {
@@ -237,7 +229,15 @@
   font-weight: 600;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1023px) {
+  .main__actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
+
   .poster {
     padding: 20px 0 20px;
     gap: 30px;
@@ -248,7 +248,7 @@
   }
 
   .decor__animal {
-    max-width: 50vw;
+    max-width: 45vw;
   }
 
   .decor__lines {
@@ -266,51 +266,150 @@
 }
 
 @media (max-width: 768px) {
-  .poster__title {
-    font-size: 4.5vw;
+  .main__decor {
+    margin: 20px 0;
   }
 
-  .poster__footer {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .footer__logo {
-    width: 80%;
-  }
-
-  .footer__info {
-    white-space: normal;
+  .poster__main {
+    gap: 20px;
   }
 
   .decor__circle {
-    width: 95%;
+    width: 60vw;
+  }
+
+  .decor__line {
+    height: clamp(70px, 2vw, 180px);
   }
 
   .decor__animal {
     width: 90%;
   }
 
-  .decor__lines {
-    transform: translateY(2%);
+  .button {
+    padding: 10px 30px;
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 475px) {
+  .poster__header {
+    margin: 0 14px;
+  }
+
+  .poster {
+    gap: 14px;
+  }
+
+  .title__two-lines {
+    display: none;
+  }
+
+  .decor__circle {
+    width: 50vw;
+  }
+
+  .main__actions {
+    flex-direction: column;
   }
 }
 
 @media (max-width: 375px) {
-  .title__two-lines {
+  .poster {
+    gap: 6px;
+  }
+}
+
+@media (min-width: 476px) {
+  .title__four-lines {
     display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .poster {
+    padding: 40px;
+  }
+
+  .poster__main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "subtitle subtitle"
+      "kaleidoscope animal"
+      "actions actions";
+    gap: 40px;
+    align-items: start;
+  }
+
+  .poster__subtitle {
+    grid-area: subtitle;
+    margin: 0 auto;
+  }
+
+  .main__kaleidoscope-wrapper {
+    padding: 50px;
+    background-position: center 34%;
+    background-size: 138%;
+  }
+
+  .main__decor {
+    width: 100%;
+    margin: auto;
+  }
+
+  .decor__circle {
+    transform: rotate(90deg);
+    width: 75%;
+    height: auto;
+  }
+
+  .decor__animal {
+    transform: translateY(-5%) rotate(0deg);
+    max-width: 50%;
+  }
+
+  .decor__lines {
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+
+  }
+
+  .decor__line {
+    width: auto;
+    height: clamp(100px, 2vw, 180px);
+  }
+
+  .main__actions {
+    grid-area: actions;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 20px;
+  }
+
+  .main__buttons {
+    margin: 0;
+  }
+
+  .button {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1200px) {
+  .decor__circle {
+    width: 80%;
+  }
+
+  .decor__lines {
+    width: 97%;
   }
 }
 
 @media (min-width: 1920px) {
   .poster {
     margin: 0 auto;
-  }
-}
-
-@media (min-width: 376px) {
-  .title__four-lines {
-    display: none;
   }
 }
