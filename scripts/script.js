@@ -211,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadCursorSVG() {
     try {
-      const response = await fetch("img/vector.svg");
+      const response = await fetch("img/brush.svg");
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const svgText = await response.text();
       customCursor.innerHTML = svgText;
