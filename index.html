@@ -26,7 +26,8 @@
       </header>
 
       <main class="poster__main">
-        <h2 class="poster__subtitle">ТАИНСТВЕННЫЕ УЗОРЫ: УГАДАЙ ЖИВОТНОЕ</h2>
+        <!-- Первый модуль: калейдоскоп -->
+        <h2 class="poster__subtitle">ТАИНСТВЕННЫЕ УЗОРЫ<br>УГАДАЙ ЖИВОТНОЕ</h2>
 
         <div class="main__kaleidoscope-wrapper">
           <img
@@ -58,13 +59,51 @@
           </div>
         </div>
 
-        <!-- Общий контейнер для обеих кнопок -->
         <div class="main__actions">
           <div class="main__buttons">
             <button class="button button--rotate">КРУТИТЬ</button>
           </div>
           <div class="main__buttons main__buttons--answer">
             <button class="button button--answer">ОТВЕТИТЬ</button>
+          </div>
+        </div>
+
+        <!-- Второй модуль: раскраска -->
+        <h2 class="poster__subtitle-two-lines">
+          Волшебная&nbsp;память<br>раскрась&nbsp;узор
+        </h2>
+
+        <div class="pattern-area"></div>
+        <div class="pattern-management">
+          <div class="pattern-hint">подсказка</div>
+          <div class="palette">
+            <div class="ellipse" data-color="#BB8DB0">
+              <img class="vector" src="img/vector.svg" />
+            </div>
+            <div class="ellipse" data-color="#FF751F">
+              <img class="vector" src="img/vector.svg" />
+            </div>
+            <div class="ellipse" data-color="#FF00AE">
+              <img class="vector" src="img/vector.svg" />
+            </div>
+            <div class="ellipse" data-color="#A1C8E4">
+              <img class="vector" src="img/vector.svg" />
+            </div>
+            <div class="ellipse" data-color="#FCBE6C">
+              <img class="vector" src="img/vector.svg" />
+            </div>
+            <div class="ellipse" data-color="#B10DC9">
+              <img class="vector" src="img/vector.svg" />
+            </div>
+          </div>
+        </div>
+
+        <div class="main__actions-2">
+          <div class="main__buttons">
+            <button class="button button--play">ИГРАТЬ</button>
+          </div>
+          <div class="main__buttons main__buttons--check">
+            <button class="button button--check">СВЕРИТЬ</button>
           </div>
         </div>
       </main>

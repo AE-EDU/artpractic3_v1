@@ -1,6 +1,5 @@
 @import url('reset.css');
 
-
 :root {
   --color-primary: #f912a9;
   --color-secondary: #fcbe6c;
@@ -13,7 +12,6 @@
   --gap: 32px;
 }
 
-
 .poster {
   max-width: var(--container-max-width);
   margin: 0 auto;
@@ -23,7 +21,6 @@
   flex-direction: column;
   gap: 60px;
 }
-
 
 .poster__header {
   background-color: var(--color-primary);
@@ -54,10 +51,11 @@
   gap: 40px;
   position: relative;
   border-radius: var(--border-radius);
-  padding: 40px 0;
+  padding: 0;
 }
 
-.poster__subtitle {
+.poster__subtitle,
+.poster__subtitle-two-lines {
   font-family: 'Nunito', sans-serif;
   font-weight: 800;
   color: var(--color-text-dark);
@@ -66,8 +64,8 @@
   text-align: center;
   max-width: 90%;
   text-transform: uppercase;
+  margin: 40px auto 0;
 }
-
 
 .main__kaleidoscope-wrapper {
   width: 100%;
@@ -89,14 +87,13 @@
   border-radius: 50%;
 }
 
-/* Анимация вращения */
 @keyframes spin {
   from {
     transform: rotate(0deg);
   }
 
   to {
-    transform: rotate(3600deg);
+    transform: rotate(900deg);
   }
 }
 
@@ -104,6 +101,17 @@
   animation: spin 2s ease-out forwards;
 }
 
+.main__actions, .main__actions-2 {
+  grid-area: actions;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 40px 0;
+}
+
+.main__actions-2 {
+  grid-area: actions-2;
+}
 
 .main__buttons {
   display: flex;
@@ -130,6 +138,10 @@
   background-color: #d0108f;
 }
 
+.button:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
 
 .main__decor {
   display: grid;
@@ -144,7 +156,6 @@
   grid-area: decor;
 }
 
-
 .decor__circle {
   width: min(80%, 1298px);
   max-width: 60vw;
@@ -156,7 +167,6 @@
   align-self: center;
   transition: background-color 0.3s ease;
 }
-
 
 .decor__animal {
   width: min(70%, 1042px);
@@ -198,6 +208,123 @@
   opacity: 0.8;
 }
 
+.pattern-area {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+  background-color: transparent;
+  cursor: none;
+}
+
+.pattern-area.correct {
+  background-color: rgba(0, 255, 0, 0.6);
+}
+
+.pattern-area svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.pattern-management {
+  display: grid;
+  grid-template-rows: 0.5fr 1fr;
+  gap: 20px;
+  justify-content: center;
+  align-self: center;
+  margin: 40px auto;
+}
+
+.pattern-hint {
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #f912a9;
+  padding: 10px 20px;
+  margin: 0 auto 20px auto;
+  display: inline-block;
+  max-width: 80%;
+}
+
+.palette {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 20px;
+  justify-content: center;
+  align-self: center;
+  margin: 40px auto;
+}
+
+.ellipse {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+}
+
+/* Цвета эллипсов в соответствии с data-color */
+.ellipse[data-color="#BB8DB0"] {
+  background-color: #BB8DB0;
+}
+
+.ellipse[data-color="#FF751F"] {
+  background-color: #FF751F;
+}
+
+.ellipse[data-color="#FF00AE"] {
+  background-color: #FF00AE;
+}
+
+.ellipse[data-color="#A1C8E4"] {
+  background-color: #A1C8E4;
+}
+
+.ellipse[data-color="#FCBE6C"] {
+  background-color: #FCBE6C;
+}
+
+.ellipse[data-color="#B10DC9"] {
+  background-color: #B10DC9;
+}
+
+.ellipse:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.ellipse.active {
+  outline: 3px solid rgb(141, 247, 28);
+  outline-offset: 2px;
+}
+
+.vector {
+  margin: auto;
+  width: 70%;
+}
+
+.custom-cursor {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+.custom-cursor svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .poster__footer {
   display: flex;
   align-items: center;
@@ -230,12 +357,13 @@
 }
 
 @media (max-width: 1023px) {
-  .main__actions {
+  .main__actions, .main__actions-2 {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 20px;
     width: 100%;
+    margin: 0 auto 40px;
   }
 
   .poster {
@@ -274,6 +402,11 @@
     gap: 20px;
   }
 
+  .poster__subtitle,
+  .poster__subtitle-two-lines {
+    margin: 30px auto 0;
+  }
+
   .decor__circle {
     width: 60vw;
   }
@@ -290,6 +423,16 @@
     padding: 10px 30px;
     min-width: 200px;
   }
+
+  .poster__footer {
+    margin: 0 20px;
+    gap: 10px;
+  }
+
+  .footer__name, .footer__group {
+    line-height: 1.1;
+    text-align: end;
+  }
 }
 
 @media (max-width: 475px) {
@@ -301,6 +444,11 @@
     gap: 14px;
   }
 
+  .poster__subtitle,
+  .poster__subtitle-two-lines {
+    margin: 20px auto 0;
+  }
+
   .title__two-lines {
     display: none;
   }
@@ -309,14 +457,37 @@
     width: 50vw;
   }
 
-  .main__actions {
+  .main__actions, .main__actions-2 {
     flex-direction: column;
+      margin: 20px auto;
   }
+
+  .pattern-management {
+    gap: 5px;
+    margin: 10px auto;
+  }
+
+  .ellipse {
+    width: 50px;
+    height: 50px;
+  }
+
+  .palette, .pattern-hint {
+    margin: 0 auto;
+    padding: 0;
+    min-height: 40px;
+    line-height: 1.1;
+  }
+
 }
 
 @media (max-width: 375px) {
   .poster {
     gap: 6px;
+  }
+
+  .footer__name, .footer__group {
+    text-align: start;
   }
 }
 
@@ -337,13 +508,21 @@
     grid-template-areas:
       "subtitle subtitle"
       "kaleidoscope animal"
-      "actions actions";
+      "actions actions"
+      "subtitle-two-lines subtitle-two-lines"
+      "decor decor"
+      "actions-2 actions-2";
     gap: 40px;
     align-items: start;
   }
 
   .poster__subtitle {
     grid-area: subtitle;
+    margin: 0 auto;
+  }
+
+  .poster__subtitle-two-lines {
+    grid-area: subtitle-two-lines;
     margin: 0 auto;
   }
 
@@ -373,20 +552,11 @@
     max-width: 100%;
     width: 100%;
     padding: 0;
-
   }
 
   .decor__line {
     width: auto;
     height: clamp(100px, 2vw, 180px);
-  }
-
-  .main__actions {
-    grid-area: actions;
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin-top: 20px;
   }
 
   .main__buttons {
