@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  //калейдоскоп
+  // калейдоскоп
   const kaleidoscopeImg = document.querySelector(".main__kaleidoscope");
   const animalImg = document.querySelector(".decor__animal");
   const leftArrow = document.querySelector(".decor__line--left");
@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  //раскраска
+  // раскраска
   const patternArea = document.querySelector(".pattern-area");
   const playBtn = document.querySelector(".button--play");
   const checkBtn = document.querySelector(".button--check");
@@ -84,9 +84,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const hintElement = document.querySelector(".pattern-hint"); // подсказка
 
   const patternUrls = [
-    "img/pattern-1.svg",
     "img/pattern-2.svg",
+    "img/pattern-1.svg",
     "img/pattern-3.svg",
+    "img/pattern-4.svg",
   ];
 
   let currentSvgElement = null;
@@ -201,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hideCursor();
   }
 
-  //КАСТОМНЫЙ КУРСОР ДЛЯ БЛОКА pattern-area
+  // КАСТОМНЫЙ КУРСОР ДЛЯ БЛОКА pattern-area
   const customCursor = document.createElement("div");
   customCursor.className = "custom-cursor";
   document.body.appendChild(customCursor);
@@ -377,4 +378,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Изначально подсказка скрыта
   hideHint();
+
+  // колесо
+  const wheelImg = document.querySelector(".wheel-area img");
+  const spinBtnWheel = document.querySelector(".button--wheel-spin");
+  const listenBtnWheel = document.querySelector(".button--wheel-listen");
+
+  // Массив животных для колеса
+  const animalsWheel = [
+    { name: "Кит", sound: "sounds/whale.mp3" },
+    { name: "Слон", sound: "sounds/horse.mp3" },
+    { name: "Лошадка", sound: "sounds/elephant.mp3" },
+    { name: "Лиса", sound: "sounds/fox.mp3" },
+    { name: "Жаба", sound: "sounds/frog.mp3" },
+    { name: "Крок", sound: "sounds/crocodile.mp3" },
+  ];
+
+  let currentWheelRotation = 0;
+  let isWheelSpinning = false;
+  let selectedAnimalIndexWheel = null;
+
+
+  function getSectorCenterAngle(sectorIndex) {
+    const sectorSize = 360 / animalsWheel.length;
+    const baseAngle = sectorIndex * sectorSize + sectorSize / 2;
+    // Сдвигаем на -60°, чтобы начальное положение указателя (180°) было между секторами 2 и 3.
+    return (baseAngle - 60 + 360) % 360;
+  }
+
+  function spinWheel() {
+    if (isWheelSpinning || !wheelImg) return;
+    isWheelSpinning = true;
+    if (listenBtnWheel) listenBtnWheel.disabled = true;
+
+    const fullTurns = Math.floor(Math.random() * 6) + 5; // 5–10 полных оборотов
+    const randomSector = Math.floor(Math.random() * animalsWheel.length);
+    const sectorCenter = getSectorCenterAngle(randomSector);
+
+    // Чтобы центр выбранного сектора оказался под указателем (который смотрит на 180°),
+    // нужно повернуть колесо на (180 - sectorCenter) градусов.
+    // Приводим к диапазону 0–360.
+    const targetAngle = (180 - sectorCenter + 360) % 360;
+
+    const targetRotation = fullTurns * 360 + targetAngle;
+
+    wheelImg.style.transition = "transform 3s cubic-bezier(0.2, 0.9, 0.1, 1.0)";
+    wheelImg.style.transform = `rotate(${targetRotation}deg)`;
+
+    const onTransitionEnd = () => {
+      wheelImg.removeEventListener("transitionend", onTransitionEnd);
+      currentWheelRotation = targetRotation % 360;
+      wheelImg.style.transition = "";
+      selectedAnimalIndexWheel = randomSector;
+      isWheelSpinning = false;
+      if (listenBtnWheel) listenBtnWheel.disabled = false;
+    };
+    wheelImg.addEventListener("transitionend", onTransitionEnd);
+  }
+
+  function playWheelSound() {
+    if (isWheelSpinning) return;
+    if (selectedAnimalIndexWheel !== null) {
+      const audio = new Audio(animalsWheel[selectedAnimalIndexWheel].sound);
+      audio.play();
+    } else {
+      console.log("Сначала покрутите колесо");
+    }
+  }
+
+  if (spinBtnWheel) {
+    spinBtnWheel.addEventListener("click", spinWheel);
+  }
+  if (listenBtnWheel) {
+    listenBtnWheel.addEventListener("click", playWheelSound);
+  }
+
+  // Начальное положение: поворот на 0° (граница между секторами 2 и 3 под указателем)
+  if (wheelImg) {
+    wheelImg.style.transform = "rotate(0deg)";
+  }
 });
