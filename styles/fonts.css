@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/Nunito-VariableFont_wght.ttf') format('truetype-variations');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/Nunito-Italic-VariableFont_wght.ttf') format('truetype-variations');
+}
+
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../fonts/Unbounded-VariableFont_wght.ttf') format('truetype-variations');
+}
