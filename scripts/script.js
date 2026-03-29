@@ -9,25 +9,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const decorCircle = document.querySelector(".decor__circle");
 
   const kaleidoscopeImages = [
-    "img/kaleidoscope-1.png",
-    "img/kaleidoscope-2.png",
-    "img/kaleidoscope-3.png",
-    "img/kaleidoscope-4.png",
-    "img/kaleidoscope-5.png",
-    "img/kaleidoscope-6.png",
+    "img/kaleidoscope-1.webp",
+    "img/kaleidoscope-2.webp",
+    "img/kaleidoscope-3.webp",
+    "img/kaleidoscope-4.webp",
+    "img/kaleidoscope-5.webp",
+    "img/kaleidoscope-6.webp",
   ];
 
   const animalImages = [
-    "img/image-1.png",
-    "img/image-2.png",
-    "img/image-3.png",
-    "img/image-4.png",
-    "img/image-5.png",
-    "img/image-6.png",
+    "img/image-1.webp",
+    "img/image-2.webp",
+    "img/image-3.webp",
+    "img/image-4.webp",
+    "img/image-5.webp",
+    "img/image-6.webp",
   ];
 
   let currentAnimalIndex = 0;
   let selectedKaleidoscopeIndex = 0;
+  let isGameComplete = true;
+  answerBtn.disabled = true;
 
   if (animalImages.length > 0) {
     animalImg.src = animalImages[currentAnimalIndex];
@@ -38,23 +40,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (leftArrow) {
     leftArrow.addEventListener("click", () => {
+      if (isGameComplete) return;
       currentAnimalIndex =
         (currentAnimalIndex - 1 + animalImages.length) % animalImages.length;
       animalImg.src = animalImages[currentAnimalIndex];
-      decorCircle.classList.remove("answer-correct", "answer-wrong");
+      decorCircle.classList.remove("answer-wrong");
     });
   }
 
   if (rightArrow) {
     rightArrow.addEventListener("click", () => {
+      if (isGameComplete) return;
       currentAnimalIndex = (currentAnimalIndex + 1) % animalImages.length;
       animalImg.src = animalImages[currentAnimalIndex];
-      decorCircle.classList.remove("answer-correct", "answer-wrong");
+      decorCircle.classList.remove("answer-wrong");
     });
   }
 
   if (rotateBtn) {
     rotateBtn.addEventListener("click", () => {
+      decorCircle.classList.remove("answer-correct");
+      if (!isGameComplete) return;
+      answerBtn.disabled = false;
       decorCircle.classList.remove("answer-correct", "answer-wrong");
       const randomIndex = Math.floor(Math.random() * kaleidoscopeImages.length);
       selectedKaleidoscopeIndex = randomIndex;
@@ -62,6 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
       kaleidoscopeImg.classList.remove("rotating");
       void kaleidoscopeImg.offsetWidth;
       kaleidoscopeImg.classList.add("rotating");
+      isGameComplete = false;
+      rotateBtn.disabled = true;
     });
   }
 
@@ -70,8 +79,12 @@ document.addEventListener("DOMContentLoaded", () => {
       decorCircle.classList.remove("answer-correct", "answer-wrong");
       if (currentAnimalIndex === selectedKaleidoscopeIndex) {
         decorCircle.classList.add("answer-correct");
+        isGameComplete = true;
+        answerBtn.disabled = true;
+        rotateBtn.disabled = false;
       } else {
         decorCircle.classList.add("answer-wrong");
+        isGameComplete = false;
       }
     });
   }
@@ -95,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let selectedColor = null; // выбранный цвет
   let whitenTimer = null; // таймер на обесцвечивание
   let isCheckEnabled = false; // доступна ли проверка (после обесцвечивания)
+  let isSecondGameComplete = false;
 
   // Функция для показа подсказки
   function showHint(text) {
@@ -195,11 +209,13 @@ document.addEventListener("DOMContentLoaded", () => {
     loadPattern(patternUrls[randomIndex], true);
     // Показываем подсказку "Запомни цвета узора"
     showHint("Запомни цвета узора");
+    playBtn.disabled = true;
     selectedColor = null;
     paletteItems.forEach((item) => item.classList.remove("active"));
     patternArea.classList.remove("correct");
     if (whitenTimer) clearTimeout(whitenTimer);
     hideCursor();
+    isSecondGameComplete = false;
   }
 
   // КАСТОМНЫЙ КУРСОР ДЛЯ БЛОКА pattern-area
@@ -290,7 +306,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Обработка клика по элементу узора (закрашивание)
   function handlePatternClick(e) {
-    if (!isCheckEnabled) return;
+    if (!isCheckEnabled || isSecondGameComplete) return;
     let target = e.target;
     while (
       target &&
@@ -309,11 +325,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Мигание красным
   function blinkRed(element, currentColor) {
+    checkBtn.disabled = true;
     let blinkCount = 0;
     const interval = setInterval(() => {
       if (blinkCount >= 2) {
         clearInterval(interval);
         element.setAttribute("fill", currentColor);
+        checkBtn.disabled = false;
         return;
       }
       const fillNow = element.getAttribute("fill");
@@ -345,6 +363,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (allCorrect) {
       patternArea.classList.add("correct");
       showHint("Верный ответ");
+      isSecondGameComplete = true;
+      checkBtn.disabled = true;
+      playBtn.disabled = false;
     } else {
       patternArea.classList.remove("correct");
     }
@@ -394,10 +415,11 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Крок", sound: "sounds/crocodile.mp3" },
   ];
 
-  let currentWheelRotation = 0;
   let isWheelSpinning = false;
   let selectedAnimalIndexWheel = null;
+  let isThirdGameComplete = true;
 
+  listenBtnWheel.disabled = true;
 
   function getSectorCenterAngle(sectorIndex) {
     const sectorSize = 360 / animalsWheel.length;
@@ -407,7 +429,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function spinWheel() {
-    if (isWheelSpinning || !wheelImg) return;
+    if (isWheelSpinning || !wheelImg || !isThirdGameComplete) return;
+    isThirdGameComplete = false;
+    spinBtnWheel.disabled = true;
     isWheelSpinning = true;
     if (listenBtnWheel) listenBtnWheel.disabled = true;
 
@@ -427,7 +451,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const onTransitionEnd = () => {
       wheelImg.removeEventListener("transitionend", onTransitionEnd);
-      currentWheelRotation = targetRotation % 360;
       wheelImg.style.transition = "";
       selectedAnimalIndexWheel = randomSector;
       isWheelSpinning = false;
@@ -441,6 +464,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (selectedAnimalIndexWheel !== null) {
       const audio = new Audio(animalsWheel[selectedAnimalIndexWheel].sound);
       audio.play();
+      isThirdGameComplete = true;
+      spinBtnWheel.disabled = false;
     } else {
       console.log("Сначала покрутите колесо");
     }
