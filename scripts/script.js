@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentAnimalIndex = 0;
   let selectedKaleidoscopeIndex = 0;
-  let isGameComplete = true;
 
   if (animalImages.length > 0) {
     animalImg.src = animalImages[currentAnimalIndex];
@@ -56,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (rotateBtn) {
     rotateBtn.addEventListener("click", () => {
-      if (!isGameComplete) return;
       decorCircle.classList.remove("answer-correct", "answer-wrong");
       const randomIndex = Math.floor(Math.random() * kaleidoscopeImages.length);
       selectedKaleidoscopeIndex = randomIndex;
@@ -64,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
       kaleidoscopeImg.classList.remove("rotating");
       void kaleidoscopeImg.offsetWidth;
       kaleidoscopeImg.classList.add("rotating");
-      isGameComplete = false
     });
   }
 
@@ -73,10 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
       decorCircle.classList.remove("answer-correct", "answer-wrong");
       if (currentAnimalIndex === selectedKaleidoscopeIndex) {
         decorCircle.classList.add("answer-correct");
-        isGameComplete = true;
       } else {
         decorCircle.classList.add("answer-wrong");
-         isGameComplete = false;
       }
     });
   }
