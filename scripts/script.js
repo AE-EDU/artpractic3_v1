@@ -65,10 +65,18 @@ document.addEventListener("DOMContentLoaded", () => {
       decorCircle.classList.remove("answer-correct", "answer-wrong");
       const randomIndex = Math.floor(Math.random() * kaleidoscopeImages.length);
       selectedKaleidoscopeIndex = randomIndex;
-      kaleidoscopeImg.src = kaleidoscopeImages[randomIndex];
       kaleidoscopeImg.classList.remove("rotating");
-      void kaleidoscopeImg.offsetWidth;
-      kaleidoscopeImg.classList.add("rotating");
+      const startSpin = () => {
+        kaleidoscopeImg.removeEventListener("load", startSpin);
+        void kaleidoscopeImg.offsetWidth;
+        kaleidoscopeImg.classList.add("rotating");
+      };
+      if (kaleidoscopeImg.complete) {
+        startSpin();
+      } else {
+        kaleidoscopeImg.addEventListener("load", startSpin);
+      }
+      kaleidoscopeImg.src = kaleidoscopeImages[randomIndex];
       isGameComplete = false;
       rotateBtn.disabled = true;
     });
